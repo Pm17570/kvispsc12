@@ -60,6 +60,7 @@ export default function TreasurePage() {
         <div style={{ marginBottom: 28 }}>
           <h1 style={{ fontSize: 34, marginBottom: 4 }}>◇ Treasure Hunt</h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: 15 }}>Fill in any clues you've discovered, then hit Check. No need to fill all 12.</p>
+          <p style={{ color: 'var(--text-secondary)', fontSize: 15 }}>Insert common name of flower you see in time order (no caps; no color)</p>
         </div>
 
         {/* Progress ring */}
