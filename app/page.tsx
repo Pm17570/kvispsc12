@@ -53,7 +53,7 @@ export default function LoginPage() {
             <div style={{ marginBottom:24 }}>
               <label style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--text-secondary)', marginBottom:6 }}>Password</label>
               <div style={{ position:'relative' }}>
-                <input className="input" type={showPw?'text':'password'} value={password} onChange={e=>setPassword(e.target.value)} placeholder="Enter your password" style={{ paddingRight:44 }} required/>
+                <input className="input" type={showPw?'text':'password'} value={password} onChange={e=>setPassword(e.target.value)} placeholder="Enter your password" style={{ paddingRight:44 }}/>
                 <button type="button" onClick={()=>setShowPw(!showPw)} style={{ position:'absolute', right:12, top:'50%', transform:'translateY(-50%)', background:'none', border:'none', cursor:'pointer', color:'var(--text-muted)', fontSize:16, padding:4 }}>{showPw?'🙈':'👁'}</button>
               </div>
             </div>
