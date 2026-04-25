@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 import AuthGuard from '@/components/AuthGuard';
 import { useAuth } from '@/lib/auth';
 
-interface Club { id: string; name: string; description: string; type: string; capacity: number; imageUrl: string; members: any[]; }
+interface Club { id: string; name: string; description: string; type: string; capacity: number; imageUrl: string; members: any[]; organizers: any[]; }
 interface Round { round: number; sessionDate: string; openAt: string; closeAt: string; clubs: Club[]; }
 
 const TYPE_BADGE: Record<string, string> = { STEM:'badge-blue', Arts:'badge-pink', Academic:'badge-green', Community:'badge-orange', Sports:'badge-orange', Other:'badge-gray' };
@@ -183,6 +183,19 @@ export default function ClubPage() {
                         <div style={{ height: '100%', width: `${pct}%`, borderRadius: 3, transition: 'width 0.5s', background: isFull ? '#EF4444' : pct > 75 ? '#FB923C' : '#4ADE80' }} />
                       </div>
                     </div>
+                    {/* Organizers */}
+                    {club.organizers?.length > 0 && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 12, flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600 }}>Organizer{club.organizers.length > 1 ? 's' : ''}:</span>
+                        {club.organizers.map((o: any, i: number) => (
+                          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                            <img src={o.profile_picture} style={{ width: 18, height: 18, borderRadius: '50%', background: 'var(--purple-light)' }} />
+                            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-secondary)' }}>{o.firstname} {o.surname}</span>
+                            <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>· {o.role_label}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     <div style={{ display: 'flex', gap: 8 }}>
                       <button onClick={() => setDetailClub(club)} className="btn-secondary" style={{ flex: 1, justifyContent: 'center', padding: '8px 12px', fontSize: 13 }}>Details</button>
                       {isOpen && (
@@ -211,7 +224,27 @@ export default function ClubPage() {
                   </div>
                   <button onClick={() => setDetailClub(null)} style={{ background: 'none', border: 'none', fontSize: 22, cursor: 'pointer', color: 'var(--text-muted)' }}>✕</button>
                 </div>
-                <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: 20 }}>{detailClub.description}</p>
+                <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: detailClub.organizers?.length > 0 ? 14 : 20 }}>{detailClub.description}</p>
+
+                {/* Organizers in modal */}
+                {detailClub.organizers?.length > 0 && (
+                  <div style={{ marginBottom: 20, padding: '14px 16px', background: 'var(--purple-soft)', borderRadius: 12, border: '1px solid var(--border)' }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--purple-mid)', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 }}>
+                      ◷ Club Organizer{detailClub.organizers.length > 1 ? 's' : ''}
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      {detailClub.organizers.map((o: any, i: number) => (
+                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                          <img src={o.profile_picture} style={{ width: 32, height: 32, borderRadius: '50%', background: 'var(--purple-light)', flexShrink: 0 }} />
+                          <div>
+                            <div style={{ fontSize: 13, fontWeight: 700 }}>{o.firstname} {o.surname} <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>({o.nickname})</span></div>
+                            <div style={{ fontSize: 11, color: 'var(--purple-mid)', fontWeight: 600 }}>{o.role_label}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <h3 style={{ fontSize: 15, marginBottom: 12 }}>Registrations — Round {selectedRound}</h3>
                 {detailClub.members.filter((m: any) => m.round === selectedRound).length === 0 ? (

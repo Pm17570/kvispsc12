@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb, saveDb } from '@/lib/db';
 import { queryAll, queryOne, run } from '@/lib/dbHelpers';
 
-function fmtClub(c: any, members: any[] = []) {
-  return { id: c.id, name: c.name, description: c.description, type: c.type, capacity: c.capacity, imageUrl: c.image_url, members };
+function fmtClub(c: any, members: any[] = [], organizers: any[] = []) {
+  return { id: c.id, name: c.name, description: c.description, type: c.type, capacity: c.capacity, imageUrl: c.image_url, members, organizers };
 }
 
 export async function GET(req: NextRequest) {
@@ -38,7 +38,12 @@ export async function GET(req: NextRequest) {
       if (round) { membersQuery += ` AND cr.round = ?`; params.push(Number(round)); }
       membersQuery += ` ORDER BY cr.registered_at ASC`;
       const members = queryAll(db, membersQuery, params);
-      return fmtClub(c, members);
+      const organizers = queryAll(db, `
+        SELECT co.role_label, u.firstname, u.surname, u.nickname, u.profile_picture
+        FROM club_organizers co JOIN users u ON u.id = co.user_id
+        WHERE co.club_id = ?
+      `, [c.id]);
+      return fmtClub(c, members, organizers);
     });
 
     return NextResponse.json({ clubs: result });
