@@ -60,7 +60,7 @@ export default function TreasurePage() {
         <div style={{ marginBottom: 28 }}>
           <h1 style={{ fontSize: 34, marginBottom: 4 }}>◇ Treasure Hunt</h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: 15 }}>Fill in any clues you've discovered, then hit Check. No need to fill all 12.</p>
-          <p style={{ color: 'var(--text-secondary)', fontSize: 15 }}>Insert common name of flower you see in time order (no caps; no color)</p>
+          <p style={{ color: 'var(--text-secondary)', fontSize: 15 }}>Insert 10 characters code that you've found at the back of picture URL.</p>
         </div>
 
         {/* Progress ring */}
@@ -89,7 +89,7 @@ export default function TreasurePage() {
             <span style={{ fontSize: 22 }}>⏳</span>
             <div>
               <div style={{ fontSize: 14, fontWeight: 700, color: '#FB923C' }}>Cooldown — {timeLeft} remaining</div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>You must wait 20 minutes between checks.</div>
+              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>You must wait 720 minutes between checks.</div>
             </div>
           </div>
         )}
