@@ -58,7 +58,7 @@ export async function GET(req: NextRequest) {
       const summary = users.map((u: any) => {
         const solved = queryAll(db, `SELECT slot, answer, locked_at FROM user_treasure WHERE user_id = ? ORDER BY locked_at ASC`, [u.id]);
         const cd = queryOne(db, `SELECT checked_at FROM treasure_cooldowns WHERE user_id = ?`, [u.id]);
-        const cooldownEnd = cd ? new Date(new Date(cd.checked_at).getTime() + 20 * 60 * 1000) : null;
+        const cooldownEnd = cd ? new Date(new Date(cd.checked_at).getTime() + 720 * 60 * 1000) : null;
         const hasCooldown = cooldownEnd && cooldownEnd > new Date();
         return {
           ...u, solvedCount: solved.length,

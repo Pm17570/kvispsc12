@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     const cd = queryOne(db, `SELECT checked_at FROM treasure_cooldowns WHERE user_id = ?`, [userId]);
     let cooldownEnd: string | null = null;
     if (cd) {
-      const end = new Date(new Date(cd.checked_at).getTime() + 20 * 60 * 1000);
+      const end = new Date(new Date(cd.checked_at).getTime() + 720 * 60 * 1000);
       if (end > new Date()) cooldownEnd = end.toISOString();
     }
 
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
 
     const cd = queryOne(db, `SELECT checked_at FROM treasure_cooldowns WHERE user_id = ?`, [userId]);
     if (cd) {
-      const end = new Date(new Date(cd.checked_at).getTime() + 20 * 60 * 1000);
+      const end = new Date(new Date(cd.checked_at).getTime() + 720 * 60 * 1000);
       if (end > new Date()) {
         return NextResponse.json({ error: 'Cooldown active', cooldownEnd: end.toISOString() }, { status: 429 });
       }
@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
       [userId, -1, '', 'cooldown_started', 'self', now]);
     saveDb();
 
-    const cooldownEnd = new Date(Date.now() + 20 * 60 * 1000).toISOString();
+    const cooldownEnd = new Date(Date.now() + 720 * 60 * 1000).toISOString();
     return NextResponse.json({ correct, wrong, cooldownEnd });
   } catch (e: any) {
     return NextResponse.json({ error: e.message }, { status: 500 });

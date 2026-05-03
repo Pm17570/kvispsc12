@@ -201,7 +201,7 @@ export function getTreasureCooldown(userId: string): Date | null {
   const store = getStore();
   const ts = store.treasureCooldowns[userId];
   if (!ts) return null;
-  const cooldownEnd = new Date(new Date(ts).getTime() + 20 * 60 * 1000);
+  const cooldownEnd = new Date(new Date(ts).getTime() + 720 * 60 * 1000);
   if (cooldownEnd > new Date()) return cooldownEnd;
   return null;
 }
