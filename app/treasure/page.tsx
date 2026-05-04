@@ -126,7 +126,7 @@ export default function TreasurePage() {
           <button onClick={handleCheck} disabled={!!cooldownEnd || checking || !hasInput} className="btn-primary" style={{ padding: '14px 44px', fontSize: 16 }}>
             {checking ? 'Checking…' : cooldownEnd ? `⏳ ${timeLeft}` : '◇ Check Answers'}
           </button>
-          <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10 }}>You don't need to fill all 12 • 20-minute cooldown after each check</p>
+          <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10 }}>You don't need to fill all 12 • 12-hour cooldown after each check</p>
         </div>
       </div>
     </AuthGuard>
